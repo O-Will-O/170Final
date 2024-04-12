@@ -1,0 +1,51 @@
+
+<style>
+    .body{
+        margin: auto;
+    }
+    .input_field {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .input_submit {
+      width: 100%;
+      background-color: #4CAF50;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .input_submit:hover {
+      background-color: #45a049;
+    }
+</style>
+
+{% block body %}
+
+    <div class="body">
+
+<form action="{{ url_for('signup') }}" method="post">
+    <div class="msg">{{ msg }}</div>
+    <input id="username" name="username" type="text" placeholder="Enter your username" class="textbox" required/></br></br>
+    <input id="password" name="password" type="password" placeholder="Enter your password" class="textbox" required/></br></br>
+    <input id="email" name="email" type="email" placeholder="Enter your email address" class="textbox" required/></br></br>
+    <input id="first_name" name="first_name" type="text" placeholder="Enter your First Name" class="textbox" required/></br></br>
+    <input id="last_name" name="last_name" type="text" placeholder="Enter your Last Name" class="textbox" required/></br></br>
+    <input id="SSN" name="SSN" type="number" placeholder="Enter your Social Security Number" class="textbox" required/></br></br>
+    <input id="phone_number" name="phone_number" type="number" placeholder="Enter your Phone Number" class="textbox" required/></br></br>
+    <input id="address" name="address" type="text" placeholder="Enter your Address" class="textbox" required/></br></br>
+
+    <input type="submit" class="btn" value="Sign Up"></br>
+</form>
+        <p>Already have an account? <a href="/login"> Sign in here</a></p>
+    </div>
+{% endblock %}

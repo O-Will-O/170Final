@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/style.css">
+    <title>Title</title>
+</head>
+  <body>
+    <header>
+      <div class="topBar">
+        <div class="">
+          <ul class="barItem">
+
+            <li><a href="/">Home</a></li>
+            <li><a href="/all_users">Other Accounts</a></li>
+            <li><a href="/create_test">Create</a></li>
+            <li><a href="/edit">Edit</a></li>
+            <li><a href="/delete">Delete</a></li>
+            <li><a href="/all_tests">Tests</a></li>
+          </ul>
+        </div>
+
+          <button class="barItem input" style="margin-left:10px;">
+            <a href="/logout" class="btn">Logout</a>
+          </button>
+
+        </div>
+
+      </div>
+    </header>
+
+    {% block body %}
+    {% endblock %}
+
