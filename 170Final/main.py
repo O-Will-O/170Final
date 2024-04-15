@@ -87,18 +87,12 @@ def signup():
         phone = request.form['phone_number']
         address = request.form['address']
 
-        account = conn.execute(text('SELECT * FROM users WHERE username = :username'), request.form).fetchone()
-        # Perform form validation
-        if not validate_email(email):
-            flash('Invalid email format!', 'error')
-            return redirect(url_for('signup'))
 
-        if not validate_phone(phone):
-            flash('Invalid phone number format! (Should be 10 digits)', 'error')
-            return redirect(url_for('signup'))
-            # You can perform database operations here
 
-        # For demo purposes, let's just redirect to a success page
+        conn.execute(text(
+            f"insert Into users () values ({username}, {password}, {email}, {firstname}, {lastname}, {ssn}, {phone}, {address});"),
+                     request.form)
+        conn.commit()
         return redirect(url_for('signup_success'))
 
     return render_template('signup.html')
