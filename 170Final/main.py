@@ -80,7 +80,7 @@ def signup():
         email = request.form['email']
         firstname = request.form['first_name']
         lastname = request.form['last_name']
-        ssn = request.form['ssn']
+        ssn = request.form['SSN']
         phone = request.form['phone']
         address = request.form['address']
 
