@@ -24,6 +24,8 @@ def validate_phone(phone):
 conn_str = "mysql://root:Ilikegames05!@localhost/170final"
 engine = create_engine(conn_str, echo=True)
 conn = engine.connect()
+
+
 #           csasasdiha
 
 @app.route("/")
@@ -46,7 +48,8 @@ def login():
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
         username = request.form['username']
         password = request.form['password']
-        account = conn.execute(text("SELECT * FROM users WHERE username = :username AND password = :password"), request.form)
+        account = conn.execute(text("SELECT * FROM users WHERE username = :username AND password = :password"),
+                               request.form)
         user_data = account.fetchone()
         if username == user_data[0] == "Admin":
             session['loggedin'] = True
@@ -81,13 +84,10 @@ def signup():
         firstname = request.form['first_name']
         lastname = request.form['last_name']
         ssn = request.form['SSN']
-        phone = request.form['phone']
+        phone = request.form['phone_number']
         address = request.form['address']
 
-        cursor = MySQL.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute(text('SELECT * FROM User WHERE username = :username'), request.form)
-        account = cursor.fetchone()
-
+        account = conn.execute(text('SELECT * FROM users WHERE username = :username'), request.form).fetchone()
         # Perform form validation
         if not validate_email(email):
             flash('Invalid email format!', 'error')
