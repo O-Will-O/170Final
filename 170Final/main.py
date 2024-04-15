@@ -88,7 +88,6 @@ def signup():
         address = request.form['address']
 
 
-
         conn.execute(text(
             f"insert Into users () values ({username}, {password}, {email}, {firstname}, {lastname}, {ssn}, {phone}, {address});"),
                      request.form)
