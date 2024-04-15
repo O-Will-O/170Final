@@ -24,7 +24,7 @@ def validate_phone(phone):
 conn_str = "mysql://root:Ilikegames05!@localhost/170final"
 engine = create_engine(conn_str, echo=True)
 conn = engine.connect()
-
+#           csasasdiha
 
 @app.route("/")
 def index():
