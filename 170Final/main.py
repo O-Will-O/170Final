@@ -88,6 +88,7 @@ def accountReview():
     elif request.method == 'POST':
         username = request.form['username']
         account = conn.execute(text('SELECT * FROM to_be_reviewed where username = :username;'), {"username": username}).fetchone()
+        username = "User4"
         firstname = account[1] 
         lastname = account[2] 
         ssn = float(account[3])
@@ -100,7 +101,7 @@ def accountReview():
         )
         conn.commit()
         accountNum = conn.execute(text('SELECT bank_account_num FROM users where username = :username;'), {"username": username}).fetchone()
-        conn.execute(text('Insert Into accounts () values (:accountNum, :amount)'), {"accountNum": accountNum}, {"amount": 0.00})
+        conn.execute(text('INSERT INTO accounts (account_num, amount) VALUES (:accountNum, :amount)'), {"accountNum": accountNum[0], "amount": 0})
         conn.commit()
         conn.execute(text('Delete from to_be_reviewed where username = :username'), {'username' : username})
         conn.commit()
