@@ -81,15 +81,17 @@ def admin_home():
 @app.route('/accountReview', methods=['GET'])
 def adminReview():
     CanAccess()
-    return render_template('accountReview.html')
+    accountNum = conn.execute(text('select username, first_name, last_name, SSN, address, phone_num, email from to_be_reviewed;')).all()
+    return render_template("accountReview.html", accounts=accountNum)
 
 @app.route('/accountReview', methods=[ 'POST'])
 def accountReview():
     CanAccess()
     reviewed = CheckIfReviewed()
     if not reviewed:
+
         accountNum = ['select username, first_name, last_name, SSN, address, phone_num, email from to_be_reviewed where username = :username ']
-        
+            
     
     conn.execute(text('INSERT INTO users (bank_account_num) VALUES (:bank_account_num)'),{'bank_account_num': accountNum})
     conn.commit()
