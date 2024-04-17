@@ -1,4 +1,16 @@
 {% extends "base.html" %}
 {% block body %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+        {% if category == 'error' %}
+            <script>
+                window.onload = function() {
+                    alert('{{ message }}');
+                }
+            </script>
+        {% endif %}
+    {% endfor %}
+{% endwith %}
+
 <h1>Hello, {{ session["Name"] }}</h1>
 {% endblock %}

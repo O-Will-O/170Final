@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>To be Reviewed</h1>
+{% for account in to_be_reviewed %}
+    <ul>
+        <li>Account Number: {{ user_data[8] }}</li>
+        <ul>
+            <li>Username: {{ user_data[0] }}</li>
+            <li>Email: {{ user_data[7] }}</li>
+            <li>Firstname: {{ user_data[1] }}</li>
+            <li>Lastname: {{ user_data[2] }}</li>
+            <li>SSN: {{ user_data[3] }}</li>
+            <li>Phone: {{ user_data[5] }}</li>
+            <li>Address: {{ user_data[4] }}</li>
+            <form action="/accountReview" method="post">
+                <input type="hidden" name="account_number" value="{{ user_data[8] }}">
+                <input type="submit" value="Reviewed">
+            </form>
+        </ul>
+    </ul>
+{% endfor %}
+
+<p>The Reviewed accounts</p>
+{% for account in reviewed_accounts %}
+    <ul>
+        <li>Username: {{ user_data[0] }}</li>
+        <li>Email: {{ user_data[7] }}</li>
+        <li>Firstname: {{ user_data[1] }}</li>
+        <li>Lastname: {{ user_data[2] }}</li>
+        <li>SSN: {{ user_data[3] }}</li>
+        <li>Phone: {{ user_data[5] }}</li>
+        <li>Address: {{ user_data[4] }}</li>
+        <div class="checkmark">&#10004; Account Reviewed</div>
+    </ul>
+{% endfor %}
+
+
+{% endblock %}

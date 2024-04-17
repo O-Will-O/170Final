@@ -1,0 +1,29 @@
+
+{% extends "base.html" %}
+{% block body %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+        {% if category == 'info' %}
+            <script>
+                window.onload = function() {
+                    alert('{{ message }}');
+                }
+            </script>
+        {% endif %}
+    {% endfor %}
+{% endwith %}
+
+<ul>
+    <li>Account Number: {{ user_data[0] }}    Amount: {{ user_data[9] }}</li>
+    <br>
+    <ul>
+        <li>Username: {{ user_data[1] }}</li>
+        <li>Email: {{ user_data[8] }}</li>
+        <li>Firstname: {{ user_data[2] }}</li>
+        <li>Lastname: {{ user_data[3] }}</li>
+        <li>SSN: {{ user_data[4] }}</li>
+        <li>Phone: {{ user_data[6] }}</li>
+        <li>Address: {{ user_data[5] }}</li>
+    </ul>
+</ul>
+{% endblock %}
