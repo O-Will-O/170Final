@@ -88,22 +88,22 @@ def accountReview():
     elif request.method == 'POST':
         username = request.form['username']
         account = conn.execute(text('SELECT * FROM to_be_reviewed where username = :username;'), {"username": username}).fetchone()
-        username = "User4"
         firstname = account[1] 
         lastname = account[2] 
         ssn = float(account[3])
         address = account[4]
         phone = float(account[5]) 
         email = account[7] 
+        password = account[6]
         conn.execute(
-            text('INSERT INTO users (username, first_name, last_name, SSN, address, phone_num, email) VALUES (:username, :first_name, :last_name, :SSN, :address, :phone, :email);'),
-            {'username': username, 'first_name': firstname, 'last_name': lastname, 'SSN': ssn, 'address': address, 'phone': phone, 'email': email}
+            text('INSERT INTO users (username, first_name, last_name, SSN, address, phone_num, email, password) VALUES (:username, :first_name, :last_name, :SSN, :address, :phone, :email, :password);'),
+            {'username': username, 'first_name': firstname, 'last_name': lastname, 'SSN': ssn, 'address': address, 'phone': phone, 'email': email, "password": password}
         )
         conn.commit()
         accountNum = conn.execute(text('SELECT bank_account_num FROM users where username = :username;'), {"username": username}).fetchone()
-        conn.execute(text('INSERT INTO accounts (account_num, amount) VALUES (:accountNum, :amount)'), {"accountNum": accountNum[0], "amount": 0})
+        conn.execute(text('INSERT INTO accounts (bank_account_num, amount) VALUES (:accountNum, :amount);'), {"accountNum": accountNum[0], "amount": 0})
         conn.commit()
-        conn.execute(text('Delete from to_be_reviewed where username = :username'), {'username' : username})
+        conn.execute(text('Delete from to_be_reviewed where username = :username;'), {'username' : username})
         conn.commit()
         return render_template('accountReview.html')
 
