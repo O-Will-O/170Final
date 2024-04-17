@@ -78,24 +78,34 @@ def admin_home():
         return render_template('admin_home.html', msg=session.get('msg'))
     return redirect(url_for('index')), flash("Access Denied", "error") 
 
-@app.route('/accountReview', methods=['GET'])
-def adminReview():
-    CanAccess()
-    accountNum = conn.execute(text('select username, first_name, last_name, SSN, address, phone_num, email from to_be_reviewed;')).all()
-    return render_template("accountReview.html", accounts=accountNum)
-
-@app.route('/accountReview', methods=[ 'POST'])
+@app.route('/accountReview', methods=['GET', 'POST'])
 def accountReview():
-    CanAccess()
-    reviewed = CheckIfReviewed()
-    if not reviewed:
-
-        accountNum = ['select username, first_name, last_name, SSN, address, phone_num, email from to_be_reviewed where username = :username ']
-            
+    if request.method == 'GET':
+        CanAccess()
+        accountNum = conn.execute(text('SELECT username, first_name, last_name, SSN, address, phone_num, email FROM to_be_reviewed;')).all()
+        return render_template("accountReview.html", accounts=accountNum)
     
-    conn.execute(text('INSERT INTO users (bank_account_num) VALUES (:bank_account_num)'),{'bank_account_num': accountNum})
-    conn.commit()
-    return render_template('accountReview.html')
+    elif request.method == 'POST':
+        username = request.form['username']
+        account = conn.execute(text('SELECT * FROM to_be_reviewed where username = :username;'), {"username": username}).fetchone()
+        firstname = account[1] 
+        lastname = account[2] 
+        ssn = float(account[3])
+        address = account[4]
+        phone = float(account[5]) 
+        email = account[7] 
+        conn.execute(
+            text('INSERT INTO users (username, first_name, last_name, SSN, address, phone_num, email) VALUES (:username, :first_name, :last_name, :SSN, :address, :phone, :email);'),
+            {'username': username, 'first_name': firstname, 'last_name': lastname, 'SSN': ssn, 'address': address, 'phone': phone, 'email': email}
+        )
+        conn.commit()
+        accountNum = conn.execute(text('SELECT bank_account_num FROM users where username = :username;'), {"username": username}).fetchone()
+        conn.execute(text('Insert Into accounts () values (:accountNum, :amount)'), {"accountNum": accountNum}, {"amount": 0.00})
+        conn.commit()
+        conn.execute(text('Delete from to_be_reviewed where username = :username'), {'username' : username})
+        conn.commit()
+        return render_template('accountReview.html')
+
     
 
 

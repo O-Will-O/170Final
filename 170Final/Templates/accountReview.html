@@ -3,9 +3,8 @@
 <h1>To be Reviewed</h1>
 {% for i in accounts %}
     <ul>
-        <li>Account Number: {{ i[8] }}</li>
+        <li>Username: {{ i[0] }}</li>
         <ul>
-            <li>Username: {{ i[0] }}</li>
             <li>Email: {{ i[6] }}</li>
             <li>Firstname: {{ i[1] }}</li>
             <li>Lastname: {{ i[2] }}</li>
@@ -13,7 +12,7 @@
             <li>Phone: {{ i[5] }}</li>
             <li>Address: {{ i[4] }}</li>
             <form action="/accountReview" method="post">
-                <input type="hidden" name="account_number" value="{{ i[8] }}">
+                <input type="hidden" name="username" value="{{ i[0] }}">
                 <input type="submit" value="Reviewed">
             </form>
         </ul>
